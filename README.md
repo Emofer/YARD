@@ -110,4 +110,4 @@ make html
 
 将会生成build目录，里面包含构建的文档。
 
-开发文档/报告/模块API见sphinx生成的[网页文档](file:///run/media/emofer/Data/Workspace/Projects/School/YARD/docs/build/html/index.html)
+开发文档/报告/模块API 见sphinx生成的网页文档，位于`docs/build/html/index.html`

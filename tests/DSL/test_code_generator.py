@@ -74,7 +74,7 @@ class TestCodeGenerator(TestCase):
     def test_transform(self):
         self.answers = [
             "(('MyStep', (('assign', ('$$var', ('\"value\"',))), ('speak', (('\"Hello, World!\"',),)))),)",
-            "(('Initialize', (('assign', ('$$counter', ('0',))), ('speak', (('\"Initialization complete.\"',),)), ('listen', (('\"User input\"',), '$$user_input')))), ('Loop', (('speak', (('\"Loop iteration: \"', '$$counter'),)), ('assign', ('$$counter', ('$counter', '+', '1'))), ('branch', (('$counter', '<', '5'), 'Loop')))), ('Finalize', (('speak', (('\"Finalizing process.\"',),)), ('exit', ()))))",
+            "(('Initialize', (('assign', ('$$counter', ('0',))), ('speak', (('\"Initialization complete.\"',),)), ('listen', (('\"User input\"',), '$$user_input')))), ('Loop', (('speak', (('\"Loop iteration: \"', '$$counter'),)), ('assign', ('$$counter', ('$counter', '+', '1'))), ('branch', (('$counter', '<', '5'), 'Loop')))), ('Finalize', (('speak', (('\"Finalizing process.\"',),)), ('end', ()))))",
             "(('Start', (('speak', (('\"Starting...\"',),)), ('runpy', (('\"script.py\"',),)), ('branch', (('\"success\"',), 'Success')))),)",
         ]
 

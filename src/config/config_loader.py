@@ -35,7 +35,7 @@ class ConfigLoader:
     @staticmethod
     def update(src_dict: dict, target_dict: dict):
         """
-        update the src dict with target dict. No like the builtin dict().update, this will update recursively.
+        update the src dict with target dict. Not like the builtin dict().update, this will update recursively.
 
         :param src_dict: src dict
         :param target_dict: target dict
