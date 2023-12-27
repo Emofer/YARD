@@ -8,7 +8,7 @@ log:
 
 # service config
 service:
-  path: ./services/calculator.ys # path of service file, "ys" means "YARD service"
+  path: ./services/customer.ys # path of service file, "ys" means "YARD service"
   variables: # variables passed to interpreter
     $name: 李华
-    $bill: 3300
+    $amount: "3300"
