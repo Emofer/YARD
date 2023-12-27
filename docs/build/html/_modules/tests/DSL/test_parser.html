@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tests.DSL.test_parser &mdash; YARD 0.1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=d786bb5c"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            YARD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">YARD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../develop.html">报告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">YARD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">模块代码</a></li>
+      <li class="breadcrumb-item active">tests.DSL.test_parser</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>tests.DSL.test_parser 源代码</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">lark</span> <span class="kn">import</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">Token</span>
+<span class="kn">from</span> <span class="nn">src</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="TestParser">
+<a class="viewcode-back" href="../../../tests.DSL.html#tests.DSL.test_parser.TestParser">[文档]</a>
+<span class="k">class</span> <span class="nc">TestParser</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestParser.test_parse">
+<a class="viewcode-back" href="../../../tests.DSL.html#tests.DSL.test_parser.TestParser.test_parse">[文档]</a>
+    <span class="k">def</span> <span class="nf">test_parse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            step test1</span>
+<span class="sd">                $foo = &quot;1&quot;</span>
+<span class="sd">                $bar = &quot;1&quot;</span>
+<span class="sd">                speak &quot;hello world&quot;</span>
+<span class="sd">                listen $foo + &quot;0&quot;, $bar // listen for $foo + 3 sec</span>
+<span class="sd">                branch &quot;hi&quot;, test2</span>
+<span class="sd">                silence test3</span>
+<span class="sd">                default test4</span>
+<span class="sd">            step test2</span>
+<span class="sd">                runpy &quot;print(123)&quot;</span>
+<span class="sd">                end</span>
+<span class="sd">            step test3</span>
+<span class="sd">                system &quot;ls&quot;</span>
+<span class="sd">                end</span>
+<span class="sd">            step test4</span>
+<span class="sd">            &quot;&quot;&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            step Initialize</span>
+<span class="sd">                speak &quot;Welcome to the system initialization process.&quot;</span>
+<span class="sd">                $counter = &quot;0&quot;</span>
+<span class="sd">                listen &quot;5&quot;, $initial_value</span>
+<span class="sd">            </span>
+<span class="sd">            step Loop</span>
+<span class="sd">                branch $counter, Loop</span>
+<span class="sd">                speak &quot;Loop iteration: &quot; + $counter</span>
+<span class="sd">                $counter = $counter + &quot;1&quot;</span>
+<span class="sd">            </span>
+<span class="sd">            step Finalize</span>
+<span class="sd">                speak &quot;Finalizing the process.&quot;</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+        <span class="p">]</span>
+        <span class="n">answers</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;service&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_block&#39;</span><span class="p">),</span> <span class="p">[</span>
+                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_header&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;test1&#39;</span><span class="p">)])]),</span>
+                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_body&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;assign&#39;</span><span class="p">),</span> <span class="p">[</span>
+                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)]),</span> <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span>
+                        <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">1</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)])])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;assign&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)]),</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                          <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">1</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)])])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;speak&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                          <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">hello world</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)])])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;listen&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                          <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)])]),</span>
+                                                                                         <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                             <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span>
+                                                                                                   <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">0</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)])]),</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;branch&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                          <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">hi</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)])]),</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;test2&#39;</span><span class="p">)])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;silence&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;test3&#39;</span><span class="p">)])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span>
+                                                           <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;test4&#39;</span><span class="p">)])])])])]),</span>
+                                            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_block&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_header&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;test2&#39;</span><span class="p">)])]),</span>
+                                                                               <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_body&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;runpy&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                           <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                      <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                               <span class="s1">&#39;term&#39;</span><span class="p">),</span>
+                                                                                                         <span class="p">[</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                             <span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span>
+                                                                                                             <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">print(123)</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)])])])]),</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">),</span>
+                                                                                            <span class="p">[])])])]),</span>
+                                            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_block&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_header&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;test3&#39;</span><span class="p">)])]),</span>
+                                                                               <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_body&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                           <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                      <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                               <span class="s1">&#39;term&#39;</span><span class="p">),</span>
+                                                                                                         <span class="p">[</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                             <span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span>
+                                                                                                             <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">ls</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)])])])]),</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">),</span>
+                                                                                            <span class="p">[])])])]),</span>
+                                            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_block&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_header&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;test4&#39;</span><span class="p">)])]),</span>
+                                                                               <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_body&#39;</span><span class="p">),</span> <span class="p">[])])]),</span>
+            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;service&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_block&#39;</span><span class="p">),</span> <span class="p">[</span>
+                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_header&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;Initialize&#39;</span><span class="p">)])]),</span>
+                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_body&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;speak&#39;</span><span class="p">),</span> <span class="p">[</span>
+                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                        <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;Welcome to the system initialization process.&quot;&#39;</span><span class="p">)])])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;assign&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;counter&#39;</span><span class="p">)]),</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                          <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;0&quot;&#39;</span><span class="p">)])])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;listen&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                          <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;5&quot;&#39;</span><span class="p">)])]),</span> <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">),</span>
+                                                                                                   <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span>
+                                                                                                          <span class="s1">&#39;initial_value&#39;</span><span class="p">)])])])])]),</span>
+                                            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_block&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_header&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;Loop&#39;</span><span class="p">)])]),</span>
+                                                                               <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_body&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;branch&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                           <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                      <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                               <span class="s1">&#39;term&#39;</span><span class="p">),</span>
+                                                                                                         <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                             <span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                             <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                             <span class="n">Token</span><span class="p">(</span>
+                                                                                                                 <span class="s1">&#39;CNAME&#39;</span><span class="p">,</span>
+                                                                                                                 <span class="s1">&#39;counter&#39;</span><span class="p">)])])]),</span>
+                                                                                           <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                      <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                    <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span>
+                                                                                                          <span class="s1">&#39;Loop&#39;</span><span class="p">)])])]),</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;speak&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                           <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                      <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                               <span class="s1">&#39;term&#39;</span><span class="p">),</span>
+                                                                                                         <span class="p">[</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                             <span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span>
+                                                                                                             <span class="s1">&#39;&quot;Loop iteration: &quot;&#39;</span><span class="p">)]),</span>
+                                                                                                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                               <span class="s1">&#39;term&#39;</span><span class="p">),</span>
+                                                                                                         <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                             <span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                             <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                             <span class="n">Token</span><span class="p">(</span>
+                                                                                                                 <span class="s1">&#39;CNAME&#39;</span><span class="p">,</span>
+                                                                                                                 <span class="s1">&#39;counter&#39;</span><span class="p">)])])])])]),</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;assign&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                           <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                               <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span>
+                                                                                                     <span class="s1">&#39;counter&#39;</span><span class="p">)]),</span> <span class="n">Tree</span><span class="p">(</span>
+                                                                                               <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                     <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                              <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                                <span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                                <span class="s1">&#39;var&#39;</span><span class="p">),</span>
+                                                                                                                <span class="p">[</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                                    <span class="s1">&#39;CNAME&#39;</span><span class="p">,</span>
+                                                                                                                    <span class="s1">&#39;counter&#39;</span><span class="p">)])]),</span>
+                                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                              <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                            <span class="n">Token</span><span class="p">(</span>
+                                                                                                                <span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span>
+                                                                                                                <span class="s1">&#39;&quot;1&quot;&#39;</span><span class="p">)])])])])])]),</span>
+                                            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_block&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_header&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;Finalize&#39;</span><span class="p">)])]),</span>
+                                                                               <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_body&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;speak&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                           <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                      <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                               <span class="s1">&#39;term&#39;</span><span class="p">),</span>
+                                                                                                         <span class="p">[</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                             <span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span>
+                                                                                                             <span class="s1">&#39;&quot;Finalizing the process.&quot;&#39;</span><span class="p">)])])])])])])])</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">answers</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Parser</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">texts</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">answers</span><span class="p">[</span><span class="n">i</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="TestParser.test_pretty_print">
+<a class="viewcode-back" href="../../../tests.DSL.html#tests.DSL.test_parser.TestParser.test_pretty_print">[文档]</a>
+    <span class="k">def</span> <span class="nf">test_pretty_print</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">trees</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;service&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_block&#39;</span><span class="p">),</span> <span class="p">[</span>
+                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_header&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;test1&#39;</span><span class="p">)])]),</span>
+                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_body&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;assign&#39;</span><span class="p">),</span> <span class="p">[</span>
+                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)]),</span> <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span>
+                        <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">1</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)])])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;assign&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)]),</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                          <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">1</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)])])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;speak&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                          <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">hello world</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)])])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;listen&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                          <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)])]),</span>
+                                                                                         <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                             <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span>
+                                                                                                   <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">0</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)])]),</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;branch&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                          <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">hi</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)])]),</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;test2&#39;</span><span class="p">)])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;silence&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;test3&#39;</span><span class="p">)])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span>
+                                                           <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;test4&#39;</span><span class="p">)])])])])]),</span>
+                                            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_block&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_header&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;test2&#39;</span><span class="p">)])]),</span>
+                                                                               <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_body&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;runpy&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                           <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                      <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                               <span class="s1">&#39;term&#39;</span><span class="p">),</span>
+                                                                                                         <span class="p">[</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                             <span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span>
+                                                                                                             <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">print(123)</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)])])])]),</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">),</span>
+                                                                                            <span class="p">[])])])]),</span>
+                                            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_block&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_header&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;test3&#39;</span><span class="p">)])]),</span>
+                                                                               <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_body&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                           <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                      <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                               <span class="s1">&#39;term&#39;</span><span class="p">),</span>
+                                                                                                         <span class="p">[</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                             <span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span>
+                                                                                                             <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">ls</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)])])])]),</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">),</span>
+                                                                                            <span class="p">[])])])]),</span>
+                                            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_block&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_header&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;test4&#39;</span><span class="p">)])]),</span>
+                                                                               <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_body&#39;</span><span class="p">),</span> <span class="p">[])])]),</span>
+            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;service&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_block&#39;</span><span class="p">),</span> <span class="p">[</span>
+                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_header&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;Initialize&#39;</span><span class="p">)])]),</span>
+                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_body&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;speak&#39;</span><span class="p">),</span> <span class="p">[</span>
+                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                        <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;Welcome to the system initialization process.&quot;&#39;</span><span class="p">)])])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;assign&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;counter&#39;</span><span class="p">)]),</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                          <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;0&quot;&#39;</span><span class="p">)])])])]),</span>
+                                                  <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;listen&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                      <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                          <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;5&quot;&#39;</span><span class="p">)])]),</span> <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">),</span>
+                                                                                                   <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span>
+                                                                                                          <span class="s1">&#39;initial_value&#39;</span><span class="p">)])])])])]),</span>
+                                            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_block&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_header&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;Loop&#39;</span><span class="p">)])]),</span>
+                                                                               <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_body&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;branch&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                           <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                      <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                               <span class="s1">&#39;term&#39;</span><span class="p">),</span>
+                                                                                                         <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                             <span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                             <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                             <span class="n">Token</span><span class="p">(</span>
+                                                                                                                 <span class="s1">&#39;CNAME&#39;</span><span class="p">,</span>
+                                                                                                                 <span class="s1">&#39;counter&#39;</span><span class="p">)])])]),</span>
+                                                                                           <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                      <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                    <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span>
+                                                                                                          <span class="s1">&#39;Loop&#39;</span><span class="p">)])])]),</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;speak&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                           <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                      <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                               <span class="s1">&#39;term&#39;</span><span class="p">),</span>
+                                                                                                         <span class="p">[</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                             <span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span>
+                                                                                                             <span class="s1">&#39;&quot;Loop iteration: &quot;&#39;</span><span class="p">)]),</span>
+                                                                                                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                               <span class="s1">&#39;term&#39;</span><span class="p">),</span>
+                                                                                                         <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                             <span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                             <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                             <span class="n">Token</span><span class="p">(</span>
+                                                                                                                 <span class="s1">&#39;CNAME&#39;</span><span class="p">,</span>
+                                                                                                                 <span class="s1">&#39;counter&#39;</span><span class="p">)])])])])]),</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;assign&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                           <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                               <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span>
+                                                                                                     <span class="s1">&#39;counter&#39;</span><span class="p">)]),</span> <span class="n">Tree</span><span class="p">(</span>
+                                                                                               <span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                     <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                              <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                                <span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                                <span class="s1">&#39;var&#39;</span><span class="p">),</span>
+                                                                                                                <span class="p">[</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                                    <span class="s1">&#39;CNAME&#39;</span><span class="p">,</span>
+                                                                                                                    <span class="s1">&#39;counter&#39;</span><span class="p">)])]),</span>
+                                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                              <span class="s1">&#39;term&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                            <span class="n">Token</span><span class="p">(</span>
+                                                                                                                <span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span>
+                                                                                                                <span class="s1">&#39;&quot;1&quot;&#39;</span><span class="p">)])])])])])]),</span>
+                                            <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_block&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_header&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_name&#39;</span><span class="p">),</span> <span class="p">[</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;CNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;Finalize&#39;</span><span class="p">)])]),</span>
+                                                                               <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;step_body&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                   <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                       <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span> <span class="s1">&#39;speak&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                           <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                      <span class="s1">&#39;expression&#39;</span><span class="p">),</span> <span class="p">[</span>
+                                                                                                    <span class="n">Tree</span><span class="p">(</span><span class="n">Token</span><span class="p">(</span><span class="s1">&#39;RULE&#39;</span><span class="p">,</span>
+                                                                                                               <span class="s1">&#39;term&#39;</span><span class="p">),</span>
+                                                                                                         <span class="p">[</span><span class="n">Token</span><span class="p">(</span>
+                                                                                                             <span class="s1">&#39;ESCAPED_STRING&#39;</span><span class="p">,</span>
+                                                                                                             <span class="s1">&#39;&quot;Finalizing the process.&quot;&#39;</span><span class="p">)])])])])])])])</span>
+        <span class="p">]</span>
+        <span class="n">answers</span> <span class="o">=</span> <span class="p">[</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;service</span>
+<span class="sd">  step_block</span>
+<span class="sd">    step_header</span>
+<span class="sd">      step_name	test1</span>
+<span class="sd">    step_body</span>
+<span class="sd">      command</span>
+<span class="sd">        assign</span>
+<span class="sd">          var	foo</span>
+<span class="sd">          expression</span>
+<span class="sd">            term	&quot;1&quot;</span>
+<span class="sd">      command</span>
+<span class="sd">        assign</span>
+<span class="sd">          var	bar</span>
+<span class="sd">          expression</span>
+<span class="sd">            term	&quot;1&quot;</span>
+<span class="sd">      command</span>
+<span class="sd">        speak</span>
+<span class="sd">          expression</span>
+<span class="sd">            term	&quot;hello world&quot;</span>
+<span class="sd">      command</span>
+<span class="sd">        listen</span>
+<span class="sd">          expression</span>
+<span class="sd">            term</span>
+<span class="sd">              var	foo</span>
+<span class="sd">            term	&quot;0&quot;</span>
+<span class="sd">          var	bar</span>
+<span class="sd">      command</span>
+<span class="sd">        branch</span>
+<span class="sd">          expression</span>
+<span class="sd">            term	&quot;hi&quot;</span>
+<span class="sd">          step_name	test2</span>
+<span class="sd">      command</span>
+<span class="sd">        silence</span>
+<span class="sd">          step_name	test3</span>
+<span class="sd">      command</span>
+<span class="sd">        default</span>
+<span class="sd">          step_name	test4</span>
+<span class="sd">  step_block</span>
+<span class="sd">    step_header</span>
+<span class="sd">      step_name	test2</span>
+<span class="sd">    step_body</span>
+<span class="sd">      command</span>
+<span class="sd">        runpy</span>
+<span class="sd">          expression</span>
+<span class="sd">            term	&quot;print(123)&quot;</span>
+<span class="sd">      command</span>
+<span class="sd">        end</span>
+<span class="sd">  step_block</span>
+<span class="sd">    step_header</span>
+<span class="sd">      step_name	test3</span>
+<span class="sd">    step_body</span>
+<span class="sd">      command</span>
+<span class="sd">        system</span>
+<span class="sd">          expression</span>
+<span class="sd">            term	&quot;ls&quot;</span>
+<span class="sd">      command</span>
+<span class="sd">        end</span>
+<span class="sd">  step_block</span>
+<span class="sd">    step_header</span>
+<span class="sd">      step_name	test4</span>
+<span class="sd">    step_body</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;service</span>
+<span class="sd">  step_block</span>
+<span class="sd">    step_header</span>
+<span class="sd">      step_name	Initialize</span>
+<span class="sd">    step_body</span>
+<span class="sd">      command</span>
+<span class="sd">        speak</span>
+<span class="sd">          expression</span>
+<span class="sd">            term	&quot;Welcome to the system initialization process.&quot;</span>
+<span class="sd">      command</span>
+<span class="sd">        assign</span>
+<span class="sd">          var	counter</span>
+<span class="sd">          expression</span>
+<span class="sd">            term	&quot;0&quot;</span>
+<span class="sd">      command</span>
+<span class="sd">        listen</span>
+<span class="sd">          expression</span>
+<span class="sd">            term	&quot;5&quot;</span>
+<span class="sd">          var	initial_value</span>
+<span class="sd">  step_block</span>
+<span class="sd">    step_header</span>
+<span class="sd">      step_name	Loop</span>
+<span class="sd">    step_body</span>
+<span class="sd">      command</span>
+<span class="sd">        branch</span>
+<span class="sd">          expression</span>
+<span class="sd">            term</span>
+<span class="sd">              var	counter</span>
+<span class="sd">          step_name	Loop</span>
+<span class="sd">      command</span>
+<span class="sd">        speak</span>
+<span class="sd">          expression</span>
+<span class="sd">            term	&quot;Loop iteration: &quot;</span>
+<span class="sd">            term</span>
+<span class="sd">              var	counter</span>
+<span class="sd">      command</span>
+<span class="sd">        assign</span>
+<span class="sd">          var	counter</span>
+<span class="sd">          expression</span>
+<span class="sd">            term</span>
+<span class="sd">              var	counter</span>
+<span class="sd">            term	&quot;1&quot;</span>
+<span class="sd">  step_block</span>
+<span class="sd">    step_header</span>
+<span class="sd">      step_name	Finalize</span>
+<span class="sd">    step_body</span>
+<span class="sd">      command</span>
+<span class="sd">        speak</span>
+<span class="sd">          expression</span>
+<span class="sd">            term	&quot;Finalizing the process.&quot;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">answers</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Parser</span><span class="p">()</span><span class="o">.</span><span class="n">pretty_print</span><span class="p">(</span><span class="n">trees</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">answers</span><span class="p">[</span><span class="n">i</span><span class="p">])</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2023, emofer。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

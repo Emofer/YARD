@@ -1,8 +1,6 @@
 # YARD
 YARD 是"Yet another robot DSL for customer service" 的缩写。
 
-北京邮电大学2021级 程序设计实践 大作业
-
 ## 介绍
 
 本项目实现了一个领域特定语言(DSL)用于编写客服机器人应答逻辑。使得能够通过简单的编写脚本就能改变客服逻辑而不用更改源代码，适用于需求经常变化的场景。此语言相对简单，编写门槛较低。
@@ -58,56 +56,4 @@ system      : "system" expression
 
 ### 示例脚本
 
-见[services](https://github.com/Emofer/YARD/tree/main/services)目录下的.ys文件。`.ys`意思是`yard service`
-
-## 安装
-
-需要python3.8+版本，在项目根目录下运行
-
-```sh
-pip install -r requirements.txt
-```
-
-来安装依赖。
-
-## 使用说明
-
-### 配置文件
-
-程序会读取工作目录下的`config.yaml`，完整的配置文件如下，可以省略部分配置，会采取默认值。默认值位于`src/config/default.yaml`。
-
-```yaml
-# working dir of main interpreter.
-pwd: .
-
-# log config
-log:
-  level: INFO # log level, could be DEBUG, INFO, WARNING, ERROR, CRITICAL
-  path: YARD.log # log path, could be relative or absolute path
-
-# service config
-service:
-  path: ./services/customer.ys # path of service file, "ys" means "YARD service"
-  variables: { } # variables passed to interpreter
-
-```
-
-### 运行
-
-编写好自己的脚本文件`.ys`，在配置文件里设置为该文件路径，然后在根目录执行main.py
-
-```sh
-python main.py
-```
-
-### 文档构建
-
-在`docs/`目录执行
-
-```sh
-make html
-```
-
-将会生成build目录，里面包含构建的文档。
-
-开发文档/报告/模块API见sphinx生成的[网页文档](file:///run/media/emofer/Data/Workspace/Projects/School/YARD/docs/build/html/index.html)
+见service

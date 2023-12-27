@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.DSL package &mdash; YARD 0.1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d786bb5c"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=beaddf03"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="src.config package" href="src.config.html" />
+    <link rel="prev" title="src package" href="src.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            YARD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">YARD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop.html">报告</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">YARD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="src.html">src package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="src.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">src.DSL package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.config.html">src.config package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html">tests package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YARD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">YARD</a></li>
+          <li class="breadcrumb-item"><a href="src.html">src package</a></li>
+      <li class="breadcrumb-item active">src.DSL package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.DSL.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-dsl-package">
+<h1>src.DSL package<a class="headerlink" href="#src-dsl-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-src.DSL.code_generator">
+<span id="src-dsl-code-generator-module"></span><h2>src.DSL.code_generator module<a class="headerlink" href="#module-src.DSL.code_generator" title="Link to this heading"></a></h2>
+<p>Code generator module</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.code_generator.</span></span><span class="sig-name descname"><span class="pre">CodeGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">visit_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">Transformer</span></code></p>
+<p>CodeGenerator. Read an AST and transform it into object code.</p>
+<p>Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">CodeGenerator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.CNAME">
+<span class="sig-name descname"><span class="pre">CNAME</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.CNAME"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.CNAME" title="Link to this definition"></a></dt>
+<dd><p>Action for CNAME.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – Token(‘CNAME’,’name’)</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>name[:]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.ESCAPED_STRING">
+<span class="sig-name descname"><span class="pre">ESCAPED_STRING</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.ESCAPED_STRING"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.ESCAPED_STRING" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.assign">
+<span class="sig-name descname"><span class="pre">assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_expression</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.assign"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.assign" title="Link to this definition"></a></dt>
+<dd><p>Action for assign.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>var_expression</strong> – list of [var, expression_var]</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of [var, expression_var]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.branch">
+<span class="sig-name descname"><span class="pre">branch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression_step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.branch"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.branch" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.command">
+<span class="sig-name descname"><span class="pre">command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.command"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.command" title="Link to this definition"></a></dt>
+<dd><p>Action for command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>content</strong> – list of one command</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>the command itself</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.default">
+<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.default"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.default" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.end">
+<span class="sig-name descname"><span class="pre">end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.end"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.end" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.expression">
+<span class="sig-name descname"><span class="pre">expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">terms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.expression"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.expression" title="Link to this definition"></a></dt>
+<dd><p>Action for expression_var.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>terms</strong> – list of terms</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of terms</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tree</span><span class="p"><span class="pre">[</span></span><span class="pre">_Leaf_T</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'a.yo'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.generate"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.generate" title="Link to this definition"></a></dt>
+<dd><p>Generate the object code file for the given AST.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tree</strong> – AST</p></li>
+<li><p><strong>path</strong> – path of the object code file</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.listen">
+<span class="sig-name descname"><span class="pre">listen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression_var</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.listen"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.listen" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.runpy">
+<span class="sig-name descname"><span class="pre">runpy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.runpy"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.runpy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.service">
+<span class="sig-name descname"><span class="pre">service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_blocks</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.service"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.service" title="Link to this definition"></a></dt>
+<dd><p>Action for service. Lark call this method when a service node is read.
+Its return value will replace the branch in the tree.
+The default retval by lark is Tree(Token(‘RULE’,’service’), step_blocks).</p>
+<p>Methods below are actions too, without further elaboration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>step_blocks</strong> – list of step_blocks</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of step_blocks</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.silence">
+<span class="sig-name descname"><span class="pre">silence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.silence"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.silence" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.speak">
+<span class="sig-name descname"><span class="pre">speak</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.speak"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.speak" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.step_block">
+<span class="sig-name descname"><span class="pre">step_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">header_body</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.step_block"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.step_block" title="Link to this definition"></a></dt>
+<dd><p>Action for step_block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>header_body</strong> – list of [header, body]</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of [header, body]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.step_body">
+<span class="sig-name descname"><span class="pre">step_body</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commands</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.step_body"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.step_body" title="Link to this definition"></a></dt>
+<dd><p>Action for step_body.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>commands</strong> – list of commands</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of commands</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.step_header">
+<span class="sig-name descname"><span class="pre">step_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.step_header"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.step_header" title="Link to this definition"></a></dt>
+<dd><p>Action for step_header.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>step_name</strong> – list of [step_name]</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>name of step</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.step_name">
+<span class="sig-name descname"><span class="pre">step_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">CNAME</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.step_name"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.step_name" title="Link to this definition"></a></dt>
+<dd><p>Action for step_name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>CNAME</strong> – list of [CNAME]</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>CNAME</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.system">
+<span class="sig-name descname"><span class="pre">system</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.system"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.system" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.term">
+<span class="sig-name descname"><span class="pre">term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.term"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.term" title="Link to this definition"></a></dt>
+<dd><p>Action for term.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>val</strong> – list of [val]</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>the val itself</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tree</span><span class="p"><span class="pre">[</span></span><span class="pre">_Leaf_T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.DSL.object_code.Service" title="src.DSL.object_code.Service"><span class="pre">Service</span></a></span></span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.transform"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.transform" title="Link to this definition"></a></dt>
+<dd><p>Transform an AST into object code in memory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tree</strong> – AST to transform</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>object code, i.e. Service instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.code_generator.CodeGenerator.var">
+<span class="sig-name descname"><span class="pre">var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">CNAME</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.var"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.code_generator.CodeGenerator.var" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.DSL.interpreter">
+<span id="src-dsl-interpreter-module"></span><h2>src.DSL.interpreter module<a class="headerlink" href="#module-src.DSL.interpreter" title="Link to this heading"></a></h2>
+<p>Interpreter module</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.interpreter.Interpreter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.interpreter.</span></span><span class="sig-name descname"><span class="pre">Interpreter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variables:</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'str'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">None)]</span> <span class="pre">=</span> <span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service:</span> <span class="pre">~src.DSL.object_code.Service</span> <span class="pre">=</span> <span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pwd:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.DSL.interpreter.Interpreter" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The interpreter runs the object code i.e. the Service.
+The interpreter manages a table of variables and use information of the object code to run.</p>
+<p>Example
+&gt;&gt;&gt; interpreter = Interpreter()
+&gt;&gt;&gt; interpreter.load(“foo.yo”)
+&gt;&gt;&gt; interpreter.run()</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.interpreter.Interpreter.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#src.DSL.interpreter.Interpreter.load" title="Link to this definition"></a></dt>
+<dd><p>Load the object code from the given path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> – Path to the object code</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.interpreter.Interpreter.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#src.DSL.interpreter.Interpreter.run" title="Link to this definition"></a></dt>
+<dd><p>Run the object code</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.DSL.object_code">
+<span id="src-dsl-object-code-module"></span><h2>src.DSL.object_code module<a class="headerlink" href="#module-src.DSL.object_code" title="Link to this heading"></a></h2>
+<p>This module contains definition of all the data structure an object code should have.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.object_code.Assign">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.object_code.</span></span><span class="sig-name descname"><span class="pre">Assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expression</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.DSL.object_code.Expression" title="src.DSL.object_code.Expression"><span class="pre">Expression</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/object_code.html#Assign"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.object_code.Assign" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference internal" href="#src.DSL.object_code.Command" title="src.DSL.object_code.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
+<p>Assign command is $var = expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>var</strong> – the variable to be assigned to</p></li>
+<li><p><strong>expression</strong> – the expression</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.object_code.Branch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.object_code.</span></span><span class="sig-name descname"><span class="pre">Branch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.DSL.object_code.Expression" title="src.DSL.object_code.Expression"><span class="pre">Expression</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">goto</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/object_code.html#Branch"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.object_code.Branch" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference internal" href="#src.DSL.object_code.Command" title="src.DSL.object_code.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
+<p>Branch command contains when to go to the next branch and what the next branch is</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prompt</strong> – the string to be checked equal</p></li>
+<li><p><strong>goto</strong> – the next branch</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.object_code.Command">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.object_code.</span></span><span class="sig-name descname"><span class="pre">Command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.DSL.object_code.Expression" title="src.DSL.object_code.Expression"><span class="pre">Expression</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/object_code.html#Command"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.object_code.Command" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Command contains a command name and args passed to it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – the command name</p></li>
+<li><p><strong>args</strong> – args passed to it</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.object_code.Default">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.object_code.</span></span><span class="sig-name descname"><span class="pre">Default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goto</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/object_code.html#Default"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.object_code.Default" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference internal" href="#src.DSL.object_code.Command" title="src.DSL.object_code.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
+<p>when none of prompts matched, goto this</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>goto</strong> – next branch</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.object_code.End">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.object_code.</span></span><span class="sig-name descname"><span class="pre">End</span></span><a class="reference internal" href="_modules/src/DSL/object_code.html#End"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.object_code.End" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference internal" href="#src.DSL.object_code.Command" title="src.DSL.object_code.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
+<p>End the session.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.object_code.Expression">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.object_code.</span></span><span class="sig-name descname"><span class="pre">Expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">terms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/object_code.html#Expression"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.object_code.Expression" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Expression is a list of terms, meaning the sum of the terms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>terms</strong> – list of terms</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.object_code.Listen">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.object_code.</span></span><span class="sig-name descname"><span class="pre">Listen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.DSL.object_code.Expression" title="src.DSL.object_code.Expression"><span class="pre">Expression</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/object_code.html#Listen"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.object_code.Listen" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference internal" href="#src.DSL.object_code.Command" title="src.DSL.object_code.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
+<p>Listen command contains the time of waiting and where to store the heard string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time</strong> – waiting time</p></li>
+<li><p><strong>var</strong> – var to store the string</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.object_code.Runpy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.object_code.</span></span><span class="sig-name descname"><span class="pre">Runpy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">python_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.DSL.object_code.Expression" title="src.DSL.object_code.Expression"><span class="pre">Expression</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/object_code.html#Runpy"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.object_code.Runpy" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference internal" href="#src.DSL.object_code.Command" title="src.DSL.object_code.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
+<p>Runpy command contains the python code to be executed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>python_code</strong> – the python code</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.object_code.Service">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.object_code.</span></span><span class="sig-name descname"><span class="pre">Service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.DSL.object_code.Step" title="src.DSL.object_code.Step"><span class="pre">Step</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/object_code.html#Service"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.object_code.Service" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A service is a list of steps</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>steps</strong> – list of steps</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.object_code.Silence">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.object_code.</span></span><span class="sig-name descname"><span class="pre">Silence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goto</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/object_code.html#Silence"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.object_code.Silence" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference internal" href="#src.DSL.object_code.Command" title="src.DSL.object_code.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
+<p>Silence command is equal to Branch(“”, goto). i.e. when nothing is heard</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>goto</strong> – the next branch</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.object_code.Speak">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.object_code.</span></span><span class="sig-name descname"><span class="pre">Speak</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_say</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.DSL.object_code.Expression" title="src.DSL.object_code.Expression"><span class="pre">Expression</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/object_code.html#Speak"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.object_code.Speak" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference internal" href="#src.DSL.object_code.Command" title="src.DSL.object_code.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
+<p>Speak command contains what to say.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>to_say</strong> – string to be said</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.object_code.Step">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.object_code.</span></span><span class="sig-name descname"><span class="pre">Step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commands</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.DSL.object_code.Command" title="src.DSL.object_code.Command"><span class="pre">Command</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/object_code.html#Step"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.object_code.Step" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Step contains the name of the step and a list of commands in the step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of the step</p></li>
+<li><p><strong>commands</strong> – list of commands</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.object_code.System">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.object_code.</span></span><span class="sig-name descname"><span class="pre">System</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command_line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.DSL.object_code.Expression" title="src.DSL.object_code.Expression"><span class="pre">Expression</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/object_code.html#System"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.object_code.System" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference internal" href="#src.DSL.object_code.Command" title="src.DSL.object_code.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
+<p>System command contains the command line to run in a shell.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>command_line</strong> – the command line</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.DSL.parser">
+<span id="src-dsl-parser-module"></span><h2>src.DSL.parser module<a class="headerlink" href="#module-src.DSL.parser" title="Link to this heading"></a></h2>
+<p>Parser module</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.parser.Parser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.parser.</span></span><span class="sig-name descname"><span class="pre">Parser</span></span><a class="reference internal" href="_modules/src/DSL/parser.html#Parser"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.parser.Parser" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">Lark</span></code></p>
+<p>Lark parser for DSL. Used to parse a DSL script and generate an AST</p>
+<p>Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">my_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;step foo&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_parser</span><span class="o">.</span><span class="n">pretty_print</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.parser.Parser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tree</span><span class="p"><span class="pre">[</span></span><span class="pre">Token</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/DSL/parser.html#Parser.parse"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.parser.Parser.parse" title="Link to this definition"></a></dt>
+<dd><p>Parse a DSL text and generate an AST</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – the DSL text</p></li>
+<li><p><strong>kwargs</strong> – other keyword arguments passed to lark parser</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>AST</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.parser.Parser.pretty_print">
+<span class="sig-name descname"><span class="pre">pretty_print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ast</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/parser.html#Parser.pretty_print"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.parser.Parser.pretty_print" title="Link to this definition"></a></dt>
+<dd><p>Pretty print the given AST</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ast</strong> – AST</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>the pretty printed AST str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.DSL">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.DSL" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.</span></span><span class="sig-name descname"><span class="pre">CodeGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">visit_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">Transformer</span></code></p>
+<p>CodeGenerator. Read an AST and transform it into object code.</p>
+<p>Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">CodeGenerator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.CNAME">
+<span class="sig-name descname"><span class="pre">CNAME</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.CNAME"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.CNAME" title="Link to this definition"></a></dt>
+<dd><p>Action for CNAME.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – Token(‘CNAME’,’name’)</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>name[:]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.ESCAPED_STRING">
+<span class="sig-name descname"><span class="pre">ESCAPED_STRING</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.ESCAPED_STRING"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.ESCAPED_STRING" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.assign">
+<span class="sig-name descname"><span class="pre">assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_expression</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.assign"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.assign" title="Link to this definition"></a></dt>
+<dd><p>Action for assign.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>var_expression</strong> – list of [var, expression_var]</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of [var, expression_var]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.branch">
+<span class="sig-name descname"><span class="pre">branch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression_step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.branch"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.branch" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.command">
+<span class="sig-name descname"><span class="pre">command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.command"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.command" title="Link to this definition"></a></dt>
+<dd><p>Action for command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>content</strong> – list of one command</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>the command itself</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.default">
+<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.default"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.default" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.end">
+<span class="sig-name descname"><span class="pre">end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.end"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.end" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.expression">
+<span class="sig-name descname"><span class="pre">expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">terms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.expression"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.expression" title="Link to this definition"></a></dt>
+<dd><p>Action for expression_var.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>terms</strong> – list of terms</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of terms</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tree</span><span class="p"><span class="pre">[</span></span><span class="pre">_Leaf_T</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'a.yo'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.generate"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.generate" title="Link to this definition"></a></dt>
+<dd><p>Generate the object code file for the given AST.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tree</strong> – AST</p></li>
+<li><p><strong>path</strong> – path of the object code file</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.listen">
+<span class="sig-name descname"><span class="pre">listen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression_var</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.listen"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.listen" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.runpy">
+<span class="sig-name descname"><span class="pre">runpy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.runpy"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.runpy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.service">
+<span class="sig-name descname"><span class="pre">service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_blocks</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.service"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.service" title="Link to this definition"></a></dt>
+<dd><p>Action for service. Lark call this method when a service node is read.
+Its return value will replace the branch in the tree.
+The default retval by lark is Tree(Token(‘RULE’,’service’), step_blocks).</p>
+<p>Methods below are actions too, without further elaboration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>step_blocks</strong> – list of step_blocks</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of step_blocks</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.silence">
+<span class="sig-name descname"><span class="pre">silence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.silence"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.silence" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.speak">
+<span class="sig-name descname"><span class="pre">speak</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.speak"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.speak" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.step_block">
+<span class="sig-name descname"><span class="pre">step_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">header_body</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.step_block"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.step_block" title="Link to this definition"></a></dt>
+<dd><p>Action for step_block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>header_body</strong> – list of [header, body]</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of [header, body]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.step_body">
+<span class="sig-name descname"><span class="pre">step_body</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commands</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.step_body"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.step_body" title="Link to this definition"></a></dt>
+<dd><p>Action for step_body.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>commands</strong> – list of commands</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of commands</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.step_header">
+<span class="sig-name descname"><span class="pre">step_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.step_header"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.step_header" title="Link to this definition"></a></dt>
+<dd><p>Action for step_header.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>step_name</strong> – list of [step_name]</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>name of step</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.step_name">
+<span class="sig-name descname"><span class="pre">step_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">CNAME</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.step_name"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.step_name" title="Link to this definition"></a></dt>
+<dd><p>Action for step_name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>CNAME</strong> – list of [CNAME]</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>CNAME</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.system">
+<span class="sig-name descname"><span class="pre">system</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.system"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.system" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.term">
+<span class="sig-name descname"><span class="pre">term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.term"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.term" title="Link to this definition"></a></dt>
+<dd><p>Action for term.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>val</strong> – list of [val]</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>the val itself</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tree</span><span class="p"><span class="pre">[</span></span><span class="pre">_Leaf_T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.DSL.object_code.Service" title="src.DSL.object_code.Service"><span class="pre">Service</span></a></span></span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.transform"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.transform" title="Link to this definition"></a></dt>
+<dd><p>Transform an AST into object code in memory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tree</strong> – AST to transform</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>object code, i.e. Service instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.CodeGenerator.var">
+<span class="sig-name descname"><span class="pre">var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">CNAME</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/code_generator.html#CodeGenerator.var"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.CodeGenerator.var" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.Interpreter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.</span></span><span class="sig-name descname"><span class="pre">Interpreter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variables:</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'str'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">None)]</span> <span class="pre">=</span> <span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service:</span> <span class="pre">~src.DSL.object_code.Service</span> <span class="pre">=</span> <span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pwd:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.DSL.Interpreter" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The interpreter runs the object code i.e. the Service.
+The interpreter manages a table of variables and use information of the object code to run.</p>
+<p>Example
+&gt;&gt;&gt; interpreter = Interpreter()
+&gt;&gt;&gt; interpreter.load(“foo.yo”)
+&gt;&gt;&gt; interpreter.run()</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.Interpreter.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#src.DSL.Interpreter.load" title="Link to this definition"></a></dt>
+<dd><p>Load the object code from the given path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> – Path to the object code</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.Interpreter.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#src.DSL.Interpreter.run" title="Link to this definition"></a></dt>
+<dd><p>Run the object code</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DSL.Parser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.DSL.</span></span><span class="sig-name descname"><span class="pre">Parser</span></span><a class="reference internal" href="_modules/src/DSL/parser.html#Parser"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.Parser" title="Link to this definition"></a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">Lark</span></code></p>
+<p>Lark parser for DSL. Used to parse a DSL script and generate an AST</p>
+<p>Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">my_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;step foo&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_parser</span><span class="o">.</span><span class="n">pretty_print</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.Parser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tree</span><span class="p"><span class="pre">[</span></span><span class="pre">Token</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/DSL/parser.html#Parser.parse"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.Parser.parse" title="Link to this definition"></a></dt>
+<dd><p>Parse a DSL text and generate an AST</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – the DSL text</p></li>
+<li><p><strong>kwargs</strong> – other keyword arguments passed to lark parser</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>AST</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DSL.Parser.pretty_print">
+<span class="sig-name descname"><span class="pre">pretty_print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ast</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/DSL/parser.html#Parser.pretty_print"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DSL.Parser.pretty_print" title="Link to this definition"></a></dt>
+<dd><p>Pretty print the given AST</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ast</strong> – AST</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>the pretty printed AST str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="src.html" class="btn btn-neutral float-left" title="src package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="src.config.html" class="btn btn-neutral float-right" title="src.config package" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2023, emofer。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

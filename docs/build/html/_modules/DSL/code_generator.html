@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSL.code_generator &mdash; YARD 0.1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d786bb5c"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            YARD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">YARD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../develop.html">报告</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">YARD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">模块代码</a></li>
+      <li class="breadcrumb-item active">DSL.code_generator</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>DSL.code_generator 源代码</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="kn">from</span> <span class="nn">lark</span> <span class="kn">import</span> <span class="n">Transformer</span><span class="p">,</span> <span class="n">Tree</span>
+<span class="kn">from</span> <span class="nn">lark.visitors</span> <span class="kn">import</span> <span class="n">_Leaf_T</span>
+
+<span class="kn">from</span> <span class="nn">DSL.parser</span> <span class="kn">import</span> <span class="n">Parser</span>
+<span class="kn">from</span> <span class="nn">DSL.object_code</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="CodeGenerator">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator">[文档]</a>
+<span class="k">class</span> <span class="nc">CodeGenerator</span><span class="p">(</span><span class="n">Transformer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    CodeGenerator for AST. Read an AST and transform abstract nodes into object code.</span>
+
+<span class="sd">    Example</span>
+
+<span class="sd">        generator = CodeGenerator()</span>
+
+<span class="sd">        generator.transform(tree)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="CodeGenerator.service">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.service">[文档]</a>
+    <span class="k">def</span> <span class="nf">service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step_blocks</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Action for service. Lark call this method when a service node is read.</span>
+<span class="sd">        Its return value will replace the branch in the tree.</span>
+<span class="sd">        The default retval by lark is Tree(Token(&#39;RULE&#39;,&#39;service&#39;), step_blocks).</span>
+
+<span class="sd">        Methods below are actions too, without further elaboration.</span>
+
+<span class="sd">        :param step_blocks: list of step_blocks</span>
+<span class="sd">        :return: tuple of step_blocks</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Service</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">step_blocks</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.step_block">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.step_block">[文档]</a>
+    <span class="k">def</span> <span class="nf">step_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">header_body</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Action for step_block.</span>
+
+<span class="sd">        :param header_body: list of [header, body]</span>
+<span class="sd">        :return: tuple of [header, body]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">header</span><span class="p">,</span> <span class="n">body</span> <span class="o">=</span> <span class="n">header_body</span>
+        <span class="k">return</span> <span class="n">Step</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.step_header">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.step_header">[文档]</a>
+    <span class="k">def</span> <span class="nf">step_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Action for step_header.</span>
+
+<span class="sd">        :param step_name: list of [step_name]</span>
+<span class="sd">        :return: name of step</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">step_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.step_name">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.step_name">[文档]</a>
+    <span class="k">def</span> <span class="nf">step_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CNAME</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Action for step_name.</span>
+
+<span class="sd">        :param CNAME: list of [CNAME]</span>
+<span class="sd">        :return: CNAME</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CNAME</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.CNAME">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.CNAME">[文档]</a>
+    <span class="k">def</span> <span class="nf">CNAME</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Action for CNAME.</span>
+
+<span class="sd">        :param name: Token(&#39;CNAME&#39;,&#39;name&#39;)</span>
+<span class="sd">        :return: name[:]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">name</span><span class="p">[:]</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.step_body">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.step_body">[文档]</a>
+    <span class="k">def</span> <span class="nf">step_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commands</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Action for step_body.</span>
+
+<span class="sd">        :param commands: list of commands</span>
+<span class="sd">        :return: tuple of commands</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">commands</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.command">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.command">[文档]</a>
+    <span class="k">def</span> <span class="nf">command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Action for command.</span>
+
+<span class="sd">        :param content:list of one command</span>
+<span class="sd">        :return: the command itself</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.assign">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.assign">[文档]</a>
+    <span class="k">def</span> <span class="nf">assign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var_expression</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Action for assign.</span>
+
+<span class="sd">        :param var_expression: list of [var, expression_var]</span>
+<span class="sd">        :return: tuple of [var, expression_var]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">var</span><span class="p">,</span> <span class="n">expression</span> <span class="o">=</span> <span class="n">var_expression</span>
+        <span class="k">return</span> <span class="n">Assign</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">expression</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.expression">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.expression">[文档]</a>
+    <span class="k">def</span> <span class="nf">expression</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terms</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Action for expression_var.</span>
+
+<span class="sd">        :param terms: list of terms</span>
+<span class="sd">        :return: tuple of terms</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Expression</span><span class="p">(</span><span class="o">*</span><span class="n">terms</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.term">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.term">[文档]</a>
+    <span class="k">def</span> <span class="nf">term</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Action for term.</span>
+
+<span class="sd">        :param val:  </span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.ESCAPED_STRING">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.ESCAPED_STRING">[文档]</a>
+    <span class="k">def</span> <span class="nf">ESCAPED_STRING</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">string</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.var">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.var">[文档]</a>
+    <span class="k">def</span> <span class="nf">var</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CNAME</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;$&quot;</span> <span class="o">+</span> <span class="n">CNAME</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.speak">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.speak">[文档]</a>
+    <span class="k">def</span> <span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expression</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Speak</span><span class="p">(</span><span class="n">expression</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.listen">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.listen">[文档]</a>
+    <span class="k">def</span> <span class="nf">listen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expression_var</span><span class="p">):</span>
+        <span class="n">time</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="n">expression_var</span>
+        <span class="k">return</span> <span class="n">Listen</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.branch">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.branch">[文档]</a>
+    <span class="k">def</span> <span class="nf">branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expression_step</span><span class="p">):</span>
+        <span class="n">prompt</span><span class="p">,</span> <span class="n">goto</span> <span class="o">=</span> <span class="n">expression_step</span>
+        <span class="k">return</span> <span class="n">Branch</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">goto</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.silence">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.silence">[文档]</a>
+    <span class="k">def</span> <span class="nf">silence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Silence</span><span class="p">(</span><span class="n">step</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.default">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.default">[文档]</a>
+    <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Default</span><span class="p">(</span><span class="n">step</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.end">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.end">[文档]</a>
+    <span class="k">def</span> <span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">End</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.runpy">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.runpy">[文档]</a>
+    <span class="k">def</span> <span class="nf">runpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expression</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Runpy</span><span class="p">(</span><span class="n">expression</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.system">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.system">[文档]</a>
+    <span class="k">def</span> <span class="nf">system</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expression</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">System</span><span class="p">(</span><span class="n">expression</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.transform">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.transform">[文档]</a>
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">:</span> <span class="n">Tree</span><span class="p">[</span><span class="n">_Leaf_T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Service</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transform an AST into object code in memory.</span>
+
+<span class="sd">        :param tree: AST to transform</span>
+<span class="sd">        :return: object code, i.e. Service instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CodeGenerator.generate">
+<a class="viewcode-back" href="../../DSL.html#DSL.code_generator.CodeGenerator.generate">[文档]</a>
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">:</span> <span class="n">Tree</span><span class="p">[</span><span class="n">_Leaf_T</span><span class="p">],</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;a.yo&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate the object code file for the given AST.</span>
+
+<span class="sd">        :param tree: AST</span>
+<span class="sd">        :param path: path of the object code file</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">object_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+        <span class="n">serialized_object</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">object_code</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">serialized_object</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    step test1</span>
+<span class="s2">        $foo = &quot;1&quot;</span>
+<span class="s2">        $bar = &quot;1&quot;</span>
+<span class="s2">        speak &quot;hello world&quot;</span>
+<span class="s2">        listen $foo + &quot;0&quot;, $bar // listen for $foo + 3 sec</span>
+<span class="s2">        branch &quot;hi&quot;, test2</span>
+<span class="s2">        silence test3</span>
+<span class="s2">        default test4</span>
+<span class="s2">    step test2</span>
+<span class="s2">        runpy &quot;print(123)&quot;</span>
+<span class="s2">        end</span>
+<span class="s2">    step test3</span>
+<span class="s2">        system &quot;ls&quot;</span>
+<span class="s2">        end</span>
+<span class="s2">    step test4</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">CodeGenerator</span><span class="p">()</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">CodeGenerator</span><span class="p">()</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="s2">&quot;service.yo&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2023, emofer。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
