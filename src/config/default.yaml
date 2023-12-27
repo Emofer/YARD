@@ -1,0 +1,12 @@
+# working dir of main interpreter.
+pwd: .
+
+# log config
+log:
+  level: INFO # log level, could be DEBUG, INFO, WARNING, ERROR, CRITICAL
+  path: YARD.log # log path, could be relative or absolute path
+
+# service config
+service:
+  path: ./services/customer.ys # path of service file, "ys" means "YARD service"
+  variables: { } # variables passed to interpreter

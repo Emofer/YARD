@@ -1,0 +1,7 @@
+step main
+	speak "我是一个计算器，向我输入你的表达式吧！"
+	default repeat
+
+step repeat
+	listen "100", $expr
+	runpy "print(eval('" + $expr + "'))"

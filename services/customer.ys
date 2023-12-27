@@ -1,0 +1,32 @@
+step welcome // 客服接入欢迎流程
+	speak $name + ", 您好，请问有什么可以帮您？您可以说“投诉”、“账单”等哦"
+	default business
+
+step business // 提供业务服务
+	listen "5"
+	branch "投诉", complain
+	branch "账单", bill
+	silence silence_proc
+	default default_proc
+
+step complain // 用户投诉
+	speak "您的意见是我们改进工作的动力，请问您还有什么补充？"
+	listen "1000", $complain
+	system "echo \"" + $complain + "\" > user_complain.txt"   // 保存用户投诉到user_complain.txt文件内
+	default thanks
+
+step thanks // 服务结束感谢
+	speak "感谢您的来电，再见"
+	end
+
+step bill // 查询账单
+	speak "您的本月账单是" + $amount + "元，感谢您的来电，再见"
+	end
+
+step silence_proc // 用户未回复
+	speak "听不清，请您大声一点可以吗"
+	default business
+
+step default_proc // 没有识别出客户意愿
+	speak "很抱歉我没有听懂，我们会不断改进的，请试试别的问题吧"
+	default business

@@ -1,0 +1,14 @@
+# working dir of main interpreter.
+pwd: .
+
+# log config
+log:
+  level: DEBUG # log level, could be DEBUG, INFO, WARNING, ERROR, CRITICAL
+  path: YARD.log # log path, could be relative or absolute path
+
+# service config
+service:
+  path: ./services/calculator.ys # path of service file, "ys" means "YARD service"
+  variables: # variables passed to interpreter
+    $name: 李华
+    $bill: 3300

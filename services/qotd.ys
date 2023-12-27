@@ -1,0 +1,4 @@
+step qotd
+	speak "now representing quote of the day"
+	system "sh ~/Scripts/cowsay.sh"
+	end

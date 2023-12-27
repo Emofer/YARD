@@ -1,6 +1,10 @@
-from lark import Transformer
-from DSL.parser import Parser
-from DSL.object_code import *
+import pickle
+
+from lark import Transformer, Tree
+from lark.visitors import _Leaf_T
+
+from .parser import Parser
+from .object_code import *
 
 
 class CodeGenerator(Transformer):
@@ -142,25 +146,25 @@ class CodeGenerator(Transformer):
     def system(self, expression):
         return System(expression[0])
 
+    def transform(self, tree: Tree[_Leaf_T]) -> Service:
+        """
+        Transform an AST into object code in memory.
 
-if __name__ == "__main__":
-    text = """
-    step test1
-        $foo = "1" + "2" + "3"
-        $bar = "1"
-        speak "hello world"
-        listen $foo + "3", $bar // listen for $foo + 3 sec
-        branch "hi", test2
-        silence test3
-        default test4
-    step test2
-        runpy "print(123)"
-        end
-    step test3
-        system "ls"
-        end
-    step test4
-    """
-    t = Parser().parse(text)
-    f = CodeGenerator().transform(t)
-    print(f)
+        :param tree: AST to transform
+        :return: object code, i.e. Service instance
+        """
+        return super().transform(tree)
+
+    def generate(self, tree: Tree[_Leaf_T], path: str = "a.yo") -> None:
+        """
+        Generate the object code file for the given AST.
+
+        :param tree: AST
+        :param path: path of the object code file
+        :return: None
+        """
+        object_code = self.transform(tree)
+        serialized_object = pickle.dumps(object_code)
+
+        with open(path, 'wb') as file:
+            file.write(serialized_object)
