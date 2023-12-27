@@ -1,3 +1,6 @@
+"""
+Code generator module
+"""
 import pickle
 
 from lark import Transformer, Tree
@@ -9,13 +12,12 @@ from .object_code import *
 
 class CodeGenerator(Transformer):
     """
-    CodeGenerator for AST. Read an AST and transform abstract nodes into object code.
+    CodeGenerator. Read an AST and transform it into object code.
 
     Example
 
-        generator = CodeGenerator()
-
-        generator.transform(tree)
+    >>> generator = CodeGenerator()
+    >>> generator.transform(tree)
     """
 
     def service(self, step_blocks):
@@ -81,7 +83,7 @@ class CodeGenerator(Transformer):
         """
         Action for command.
 
-        :param content:list of one command
+        :param content: list of one command
         :return: the command itself
         """
         return content[0]
@@ -109,8 +111,8 @@ class CodeGenerator(Transformer):
         """
         Action for term.
 
-        :param val:  
-        :return:
+        :param val: list of [val]
+        :return: the val itself
         """
         return val[0]
 

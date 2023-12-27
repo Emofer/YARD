@@ -32,5 +32,5 @@ source_suffix = ['.rst', '.md', '.MD']
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
-sys.path.insert(0, os.path.abspath('../../src'))
+sys.path.insert(0, os.path.abspath('../../'))
 # print(sys.path)

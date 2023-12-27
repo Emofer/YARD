@@ -38,4 +38,23 @@ logging format
 """
 
 config_path = "config.yaml"
+"""
+config file path
+"""
 default_config_path = "src/config/default.yaml"
+"""
+default config file path
+"""
+
+logo = """
+==================================
+ __   __     _      ____    ____  
+ \ \ / /    / \    |  _ \  |  _ \ 
+  \ V /    / _ \   | |_) | | | | |
+   | |    / ___ \  |  _ <  | |_| |
+   |_|   /_/   \_\ |_| \_\ |____/ 
+==================================
+"""
+"""
+logo of the project
+"""

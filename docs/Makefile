@@ -18,5 +18,5 @@ help:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	for file in source/*.rst;do if [ "$$file" != source/index.rst ];then rm $$file;fi;done
-	sphinx-apidoc -o source ../src
+	sphinx-apidoc -o source ../
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

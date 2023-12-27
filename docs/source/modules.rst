@@ -1,9 +1,9 @@
-src
-===
+YARD
+====
 
 .. toctree::
    :maxdepth: 4
 
-   DSL
-   config
    main
+   src
+   tests
