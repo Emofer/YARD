@@ -18,7 +18,7 @@ class Parser(Lark):
             step_header : "step" step_name
             step_name   : CNAME
             step_body   : command*
-            command     : assign | speak | listen | branch | silence | default | exit | runpy | system
+            command     : assign | speak | listen | branch | silence | default | end | runpy | system
             assign      : var "=" expression
             expression  : term ("+" term)*
             term        : var | ESCAPED_STRING
@@ -28,7 +28,7 @@ class Parser(Lark):
             branch      : "branch" expression "," step_name
             silence     : "silence" step_name
             default     : "default" step_name
-            exit        : "exit"
+            end         : "end"
             runpy       : "runpy" expression
             system      : "system" expression    
             
@@ -51,10 +51,10 @@ if __name__ == "__main__":
         default test4
     step test2
         runpy "print(123)"
-        exit
+        end
     step test3
         system "ls"
-        exit
+        end
     step test4
     """
     t = Parser().parse(text)
