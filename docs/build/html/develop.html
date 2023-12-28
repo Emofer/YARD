@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>报告 &mdash; YARD 0.1.0 文档</title>
+  <title>开发文档 &mdash; YARD 0.1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -22,7 +22,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="src" href="modules.html" />
+    <link rel="next" title="YARD" href="modules.html" />
     <link rel="prev" title="YARD" href="README.html" /> 
 </head>
 
@@ -48,8 +48,44 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="README.html">YARD</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">报告</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">src</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">开发文档</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">风格</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">注释</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">命名风格</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">模块组织</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#commit">commit风格</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">设计和实现</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">数据结构</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ast">抽象语法树AST</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">目标代码</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">变量表</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">模块划分</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">文档</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">接口</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id14">程序间接口</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">人机接口</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id16">测试</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id17">测试桩</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">自动测试脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id19">记法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dsl">DSL语法记法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id20">配置文件记法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">YARD</a></li>
 </ul>
 
         </div>
@@ -66,7 +102,7 @@
           <div role="navigation" aria-label="页面导航">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">报告</li>
+      <li class="breadcrumb-item active">开发文档</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/develop.md.txt" rel="nofollow"> 查看页面源码</a>
       </li>
@@ -77,7 +113,7 @@
            <div itemprop="articleBody">
              
   <section id="id1">
-<h1>报告<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<h1>开发文档<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <p>风格：
 满分15分，其中代码注释6分，命名6分，其它3分。
 设计和实现：
@@ -94,6 +130,325 @@
 <li><p>测试：单元测试库</p></li>
 </ul>
 <p>记法</p>
+<section id="id2">
+<h2>风格<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>代码格式化采用PEP8标准，其余风格见下</p>
+<section id="id3">
+<h3>注释<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>采用reStructuredText风格，这也是sphinx默认的风格。</p>
+<p>示例如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">src_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">target_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        update the src dict with target dict. Not like the builtin dict().update, this will update recursively.</span>
+
+<span class="sd">        :param src_dict: src dict</span>
+<span class="sd">        :param target_dict: target dict</span>
+<span class="sd">        :return: updated dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ...</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>命名风格<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>命名应遵循以下风格：</p>
+<ul class="simple">
+<li><p>类名使用大驼峰命名法，如： <code class="docutils literal notranslate"><span class="pre">CodeGenerator,</span> <span class="pre">Parser</span></code>等</p></li>
+<li><p>类的公开成员方法使用下划线命名法，如： <code class="docutils literal notranslate"><span class="pre">pretty_print，parse</span> </code></p></li>
+<li><p>类的私有方法使用双下划线+下划线命名法，如： <code class="docutils literal notranslate"><span class="pre">__assign,</span> <span class="pre">__calc_expr</span></code></p></li>
+<li><p>变量名使用下划线命名法，如：<code class="docutils literal notranslate"><span class="pre">user_input</span></code></p></li>
+<li><p>文件名，包名尽量使用下划线命名法，除非有约定俗成的大写字母缩写，如：<code class="docutils literal notranslate"><span class="pre">code_generator.py</span></code> , <code class="docutils literal notranslate"><span class="pre">DSL</span></code></p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>模块组织<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>尽量一个模块对应一个类，如<code class="docutils literal notranslate"><span class="pre">parser.py</span></code>对应<code class="docutils literal notranslate"><span class="pre">Parser</span></code>类，除非该模块没有类或者必要的有很多类，如<code class="docutils literal notranslate"><span class="pre">object_code.py</span></code>包含了生成的目标代码所应该具有的各种数据结构类。</p></li>
+<li><p>在每个包的<code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>中<code class="docutils literal notranslate"><span class="pre">import</span></code>需要暴露给外部的接口，也可显式地定义<code class="docutils literal notranslate"><span class="pre">__all__</span> <span class="pre">=</span> <span class="pre">[]</span></code>来确定接口</p></li>
+</ul>
+</section>
+<section id="commit">
+<h3>commit风格<a class="headerlink" href="#commit" title="Link to this heading"></a></h3>
+<p>采用前端框架<a class="reference external" href="https://zj-git-guide.readthedocs.io/zh-cn/latest/message/Angular%E6%8F%90%E4%BA%A4%E4%BF%A1%E6%81%AF%E8%A7%84%E8%8C%83/">Angular提出的git commit规范</a>，如下</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nb">type</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;</span><span class="n">scope</span><span class="o">&gt;</span><span class="p">):</span> <span class="o">&lt;</span><span class="n">subject</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">BLANK</span> <span class="n">LINE</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">BLANK</span> <span class="n">LINE</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">footer</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>提交类型指定为下面其中一个：</p>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">build</span></code>：对构建系统或者外部依赖项进行了修改</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ci</span></code>：对CI配置文件或脚本进行了修改</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs</span></code>：对文档进行了修改</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">feat</span></code>：增加新的特征</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fix</span></code>：修复<code class="docutils literal notranslate"><span class="pre">bug</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pref</span></code>：提高性能的代码更改</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">refactor</span></code>：既不是修复<code class="docutils literal notranslate"><span class="pre">bug</span></code>也不是添加特征的代码重构</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">style</span></code>：不影响代码含义的修改，比如空格、格式化、缺失的分号等</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test</span></code>：增加确实的测试或者矫正已存在的测试</p></li>
+</ol>
+</section>
+</section>
+<section id="id6">
+<h2>设计和实现<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>设计上，程序类似c语言的编译流程。Parser将源代码（<code class="docutils literal notranslate"><span class="pre">.ys</span></code>，yard service）文件进行词法、语法分析后生成抽象语法树AST，CodeGenerator将语法树转化为目标代码(<code class="docutils literal notranslate"><span class="pre">.yo</span></code>，yard object code)，Interpreter解释执行目标代码。</p>
+<section id="id7">
+<h3>数据结构<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<section id="ast">
+<h4>抽象语法树AST<a class="headerlink" href="#ast" title="Link to this heading"></a></h4>
+<p>采用lark库的语法树，由Tree类和Token类嵌套组成。类似：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;service&#39;</span><span class="p">,</span> <span class="p">[</span>
+                <span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;step_block&#39;</span><span class="p">,</span> <span class="p">[</span>
+                    <span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;step_header&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;step_name&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;MyStep&#39;</span><span class="p">])]),</span>
+                    <span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;step_body&#39;</span><span class="p">,</span> <span class="p">[</span>
+                        <span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span>
+                             <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;assign&#39;</span><span class="p">,</span>
+                                   <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;var&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;$var&#39;</span><span class="p">]),</span> <span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;expression&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;term&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;&quot;value&quot;&#39;</span><span class="p">])])])]),</span>
+                        <span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;speak&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;expression&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;term&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;&quot;Hello, World!&quot;&#39;</span><span class="p">])])])]),</span>
+                    <span class="p">])</span>
+                <span class="p">]),</span>
+            <span class="p">])</span>
+</pre></div>
+</div>
+<p>将其以更可读的形式打印出来如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>service
+  step_block
+    step_header
+      step_name	MyStep
+    step_body
+      command
+        assign
+          var	$var
+          expression
+            term	&quot;value&quot;
+      command
+        speak
+          expression
+            term	&quot;Hello, World!&quot;
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h4>目标代码<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
+<p>目标代码是一个Service类，将其序列化为文件即为目标代码文件。详细定义在object_code.py中。可以将其看成是C++的嵌套结构体。比如Service就是一系列Step的元组，而Step又是由步骤名和一系列指令Command组成的元组，每条指令类似三地址代码，是参数的元组，以此类推。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Service</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Step</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">steps</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Step</span><span class="p">]</span> <span class="o">=</span> <span class="n">steps</span>
+	<span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    	<span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">steps</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    	<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>把一个实际的Service类以嵌套元组的形式打印出来结果如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">((</span><span class="s1">&#39;MyStep&#39;</span><span class="p">,</span> <span class="p">((</span><span class="s1">&#39;assign&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;$$var&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;&quot;value&quot;&#39;</span><span class="p">,))),</span> <span class="p">(</span><span class="s1">&#39;speak&#39;</span><span class="p">,</span> <span class="p">((</span><span class="s1">&#39;&quot;Hello, World!&quot;&#39;</span><span class="p">,),)))),),</span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h4>变量表<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
+<p>由interpreter维护一个哈希表作为变量表</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">__variables</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">:</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;$foo&quot;</span> <span class="p">:</span> <span class="s2">&quot;123&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;$bar&quot;</span> <span class="p">:</span> <span class="s2">&quot;456&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id10">
+<h3>模块划分<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<p><img alt="image-20231228120621038" src="_images/image-20231228120621038.png" /></p>
+<p>程序分为两个package,  DSL和config。</p>
+<p>config包含配置文件相关模块：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">config_loader.py</span></code>模块用于读取用户配置文件，并和默认配置<code class="docutils literal notranslate"><span class="pre">default.yaml</span></code>合并</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">constants.py</span></code> 面向开发人员的配置，定义了程序中的各种常量，比如：EBNF文法字符串，默认配置文件路径，日志格式等</p></li>
+</ul>
+<p>DSL包负责DSL语言编译原理相关模块：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">parser.py</span></code>模块用于词法分析和语法分析，生成抽象语法树AST</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code_generator.py</span></code>模块用于将AST转换为目标代码供给interpreter解释执行</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">object_code.py</span></code>模块用于定义目标代码数据结构</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">interpreter.py</span></code>模块用于读取目标代码文件，执行目标代码</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">main.py</span></code>是程序入口文件，设置日志格式、调用以上模块完成任务</p>
+</section>
+<section id="id11">
+<h3>功能<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<p>除了基本的客户服务机器人功能，还提供可扩展的语法和外界交互，实现更多功能，详见用户文档。</p>
+<p>有三个实例脚本，分别实现了客服机器人、每日一句、计算器的功能。见services目录</p>
+</section>
+<section id="id12">
+<h3>文档<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<p>用户文档README.md，开发文档develop.md也就是本文档，还有sphinx根据注释生成的程序接口文档。</p>
+</section>
+</section>
+<section id="id13">
+<h2>接口<a class="headerlink" href="#id13" title="Link to this heading"></a></h2>
+<section id="id14">
+<h3>程序间接口<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<p>模块划分一节已经讲述，各个模块之间互相import, 使用各自的公开成员函数、常量。</p>
+</section>
+<section id="id15">
+<h3>人机接口<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<p>通过<code class="docutils literal notranslate"><span class="pre">interpreter.py</span></code>解释执行模块为各种指令定义的动作实现，目前是一个简单的命令行界面，实际上只要写一个子类继承Interpreter类，并重写这些方法即可实现各种交互接口。比如，如果使用图形化界面GUI，speak指令可以换成给前端发送消息显示给用户，listen指令可以换成调用语音识别接口和自然语言处理技术等。</p>
+<p>下面是部分接口实现方法示例：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>	<span class="k">def</span> <span class="nf">__assign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="n">Assign</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assign the variable. will register it.</span>
+
+<span class="sd">        :param command: the assign command</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__variables</span><span class="p">[</span><span class="n">command</span><span class="o">.</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__calc_expr</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__speak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="n">Speak</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Speak action, just print.</span>
+
+<span class="sd">        :param command: the Speak command</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__calc_expr</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">to_say</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__listen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="n">Listen</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wait the given time for user input. If out of time, the input is &quot;&quot;.</span>
+
+<span class="sd">        :param command: the listen command</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__calc_expr</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">time</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">i</span><span class="p">:</span>
+            <span class="n">user_input</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">user_input</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__variables</span><span class="p">[</span><span class="s2">&quot;$_last_response&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_input</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__variables</span><span class="p">[</span><span class="n">command</span><span class="o">.</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_input</span>
+</pre></div>
+</div>
+<p>另外，也有配置文件<code class="docutils literal notranslate"><span class="pre">config.yaml</span></code>接口</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># working dir of main interpreter.</span>
+<span class="nt">pwd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+
+<span class="c1"># log config</span>
+<span class="nt">log</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEBUG</span><span class="w"> </span><span class="c1"># log level, could be DEBUG, INFO, WARNING, ERROR, CRITICAL</span>
+<span class="w">  </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">YARD.log</span><span class="w"> </span><span class="c1"># log path, could be relative or absolute path</span>
+
+<span class="c1"># service config</span>
+<span class="nt">service</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./services/customer.ys</span><span class="w"> </span><span class="c1"># path of service file, &quot;ys&quot; means &quot;YARD service&quot;</span>
+<span class="w">  </span><span class="nt">variables</span><span class="p">:</span><span class="w"> </span><span class="c1"># variables passed to interpreter</span>
+<span class="w">    </span><span class="nt">$name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">李华</span>
+<span class="w">    </span><span class="nt">$amount</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3300&quot;</span>
+</pre></div>
+</div>
+<p>以及使用python logging库实现的日志文件YARD.log</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2023</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">27</span> <span class="mi">23</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="mi">09</span><span class="p">,</span><span class="mi">534</span> <span class="n">__main__</span> <span class="n">INFO</span><span class="p">]</span> 
+<span class="o">==================================</span>
+ <span class="n">__</span>   <span class="n">__</span>     <span class="n">_</span>      <span class="n">____</span>    <span class="n">____</span>  
+ \ \ <span class="o">/</span> <span class="o">/</span>    <span class="o">/</span> \    <span class="o">|</span>  <span class="n">_</span> \  <span class="o">|</span>  <span class="n">_</span> \ 
+  \ <span class="n">V</span> <span class="o">/</span>    <span class="o">/</span> <span class="n">_</span> \   <span class="o">|</span> <span class="o">|</span><span class="n">_</span><span class="p">)</span> <span class="o">|</span> <span class="o">|</span> <span class="o">|</span> <span class="o">|</span> <span class="o">|</span>
+   <span class="o">|</span> <span class="o">|</span>    <span class="o">/</span> <span class="n">___</span> \  <span class="o">|</span>  <span class="n">_</span> <span class="o">&lt;</span>  <span class="o">|</span> <span class="o">|</span><span class="n">_</span><span class="o">|</span> <span class="o">|</span>
+   <span class="o">|</span><span class="n">_</span><span class="o">|</span>   <span class="o">/</span><span class="n">_</span><span class="o">/</span>   \<span class="n">_</span>\ <span class="o">|</span><span class="n">_</span><span class="o">|</span> \<span class="n">_</span>\ <span class="o">|</span><span class="n">____</span><span class="o">/</span> 
+<span class="o">==================================</span>
+
+<span class="p">[</span><span class="mi">2023</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">27</span> <span class="mi">23</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="mi">09</span><span class="p">,</span><span class="mi">534</span> <span class="n">__main__</span> <span class="n">INFO</span><span class="p">]</span> <span class="n">Starting</span> <span class="k">with</span> <span class="n">config</span> <span class="p">{</span><span class="s1">&#39;pwd&#39;</span><span class="p">:</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;YARD.log&#39;</span><span class="p">},</span> <span class="s1">&#39;service&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;./services/customer.ys&#39;</span><span class="p">,</span> <span class="s1">&#39;variables&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;$name&#39;</span><span class="p">:</span> <span class="s1">&#39;李华&#39;</span><span class="p">,</span> <span class="s1">&#39;$amount&#39;</span><span class="p">:</span> <span class="s1">&#39;3300&#39;</span><span class="p">}}}</span>
+<span class="p">[</span><span class="mi">2023</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">27</span> <span class="mi">23</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="mi">09</span><span class="p">,</span><span class="mi">534</span> <span class="n">__main__</span> <span class="n">INFO</span><span class="p">]</span> <span class="n">reading</span> <span class="n">service</span> <span class="n">file</span><span class="o">...</span>
+<span class="p">[</span><span class="mi">2023</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">27</span> <span class="mi">23</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="mi">09</span><span class="p">,</span><span class="mi">554</span> <span class="n">__main__</span> <span class="n">INFO</span><span class="p">]</span> <span class="n">parsing</span> <span class="n">service</span> <span class="n">file</span><span class="o">...</span>
+<span class="p">[</span><span class="mi">2023</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">27</span> <span class="mi">23</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="mi">09</span><span class="p">,</span><span class="mi">556</span> <span class="n">__main__</span> <span class="n">INFO</span><span class="p">]</span> <span class="n">generating</span> <span class="nb">object</span> <span class="n">code</span><span class="o">...</span>
+<span class="p">[</span><span class="mi">2023</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">27</span> <span class="mi">23</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="mi">09</span><span class="p">,</span><span class="mi">556</span> <span class="n">__main__</span> <span class="n">INFO</span><span class="p">]</span> <span class="n">running</span><span class="o">...</span>
+<span class="p">[</span><span class="mi">2023</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">27</span> <span class="mi">23</span><span class="p">:</span><span class="mi">31</span><span class="p">:</span><span class="mi">40</span><span class="p">,</span><span class="mi">577</span> <span class="n">__main__</span> <span class="n">INFO</span><span class="p">]</span> 
+
+<span class="o">==================================</span>
+ <span class="n">__</span>   <span class="n">__</span>     <span class="n">_</span>      <span class="n">____</span>    <span class="n">____</span>  
+ \ \ <span class="o">/</span> <span class="o">/</span>    <span class="o">/</span> \    <span class="o">|</span>  <span class="n">_</span> \  <span class="o">|</span>  <span class="n">_</span> \ 
+  \ <span class="n">V</span> <span class="o">/</span>    <span class="o">/</span> <span class="n">_</span> \   <span class="o">|</span> <span class="o">|</span><span class="n">_</span><span class="p">)</span> <span class="o">|</span> <span class="o">|</span> <span class="o">|</span> <span class="o">|</span> <span class="o">|</span>
+   <span class="o">|</span> <span class="o">|</span>    <span class="o">/</span> <span class="n">___</span> \  <span class="o">|</span>  <span class="n">_</span> <span class="o">&lt;</span>  <span class="o">|</span> <span class="o">|</span><span class="n">_</span><span class="o">|</span> <span class="o">|</span>
+   <span class="o">|</span><span class="n">_</span><span class="o">|</span>   <span class="o">/</span><span class="n">_</span><span class="o">/</span>   \<span class="n">_</span>\ <span class="o">|</span><span class="n">_</span><span class="o">|</span> \<span class="n">_</span>\ <span class="o">|</span><span class="n">____</span><span class="o">/</span> 
+<span class="o">==================================</span>
+
+<span class="p">[</span><span class="mi">2023</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">28</span> <span class="mi">12</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">19</span><span class="p">,</span><span class="mi">300</span> <span class="n">__main__</span> <span class="n">INFO</span><span class="p">]</span> <span class="n">Starting</span> <span class="k">with</span> <span class="n">config</span> <span class="p">{</span><span class="s1">&#39;pwd&#39;</span><span class="p">:</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;YARD.log&#39;</span><span class="p">},</span> <span class="s1">&#39;service&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;./services/calculator.ys&#39;</span><span class="p">,</span> <span class="s1">&#39;variables&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;$name&#39;</span><span class="p">:</span> <span class="s1">&#39;李华&#39;</span><span class="p">,</span> <span class="s1">&#39;$amount&#39;</span><span class="p">:</span> <span class="s1">&#39;3300&#39;</span><span class="p">}}}</span>
+<span class="p">[</span><span class="mi">2023</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">28</span> <span class="mi">12</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">19</span><span class="p">,</span><span class="mi">300</span> <span class="n">__main__</span> <span class="n">INFO</span><span class="p">]</span> <span class="n">reading</span> <span class="n">service</span> <span class="n">file</span><span class="o">...</span>
+<span class="p">[</span><span class="mi">2023</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">28</span> <span class="mi">12</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">19</span><span class="p">,</span><span class="mi">319</span> <span class="n">__main__</span> <span class="n">INFO</span><span class="p">]</span> <span class="n">parsing</span> <span class="n">service</span> <span class="n">file</span><span class="o">...</span>
+<span class="p">[</span><span class="mi">2023</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">28</span> <span class="mi">12</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">19</span><span class="p">,</span><span class="mi">321</span> <span class="n">__main__</span> <span class="n">INFO</span><span class="p">]</span> <span class="n">generating</span> <span class="nb">object</span> <span class="n">code</span><span class="o">...</span>
+<span class="p">[</span><span class="mi">2023</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">28</span> <span class="mi">12</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">19</span><span class="p">,</span><span class="mi">321</span> <span class="n">__main__</span> <span class="n">INFO</span><span class="p">]</span> <span class="n">running</span><span class="o">...</span>
+<span class="p">[</span><span class="mi">2023</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">28</span> <span class="mi">12</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">23</span><span class="p">,</span><span class="mi">966</span> <span class="n">src</span><span class="o">.</span><span class="n">DSL</span><span class="o">.</span><span class="n">interpreter</span> <span class="n">DEBUG</span><span class="p">]</span> <span class="n">running</span> <span class="nb">print</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;1+1&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id16">
+<h2>测试<a class="headerlink" href="#id16" title="Link to this heading"></a></h2>
+<p>测试位于tests目录下，和源代码结构一致，但是加上前缀<code class="docutils literal notranslate"><span class="pre">test_</span></code>以供python测试模块unittest识别</p>
+<p><img alt="image-20231228123232855" src="_images/image-20231228123232855.png" /></p>
+<section id="id17">
+<h3>测试桩<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
+<p>在测试的时候，某个模块还没写好，需要临时定义一个返回合法结果的测试桩。</p>
+<p>比如在验证code_generator模块时，语法树生成还没有完成，就需要自定义一个返回语法树的测试桩。这个函数返回了语法树的列表，每一个语法树都是自定义的结构。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parser_stub</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">trees</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;service&#39;</span><span class="p">,</span> <span class="p">[</span>
+                <span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;step_block&#39;</span><span class="p">,</span> <span class="p">[</span>
+                    <span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;step_header&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;step_name&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;MyStep&#39;</span><span class="p">])]),</span>
+                    <span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;step_body&#39;</span><span class="p">,</span> <span class="p">[</span>
+                        <span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span>
+                             <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;assign&#39;</span><span class="p">,</span>
+                                   <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;var&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;$var&#39;</span><span class="p">]),</span> <span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;expression&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;term&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;&quot;value&quot;&#39;</span><span class="p">])])])]),</span>
+                        <span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;speak&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;expression&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="s1">&#39;term&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;&quot;Hello, World!&quot;&#39;</span><span class="p">])])])]),</span>
+                    <span class="p">])</span>
+                <span class="p">]),</span>
+            <span class="p">]),</span>
+            <span class="c1"># ... more stub</span>
+        <span class="p">]</span>
+</pre></div>
+</div>
+<p>在测试config_loader模块时，由于需要打开配置文件路径，这在测试中很麻烦，我们可以虚拟一个文件测试桩，其内容为给定的字符串，重载open方法让其总是返回我们指定的内容。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config_file_stub</span> <span class="o">=</span> <span class="p">[</span>
+<span class="sd">&quot;&quot;&quot;pwd: .</span>
+
+<span class="sd">log:</span>
+<span class="sd">  level: INFO</span>
+<span class="sd">  path: YARD.log</span>
+
+<span class="sd">service:</span>
+<span class="sd">  path: ./services/customer.ys # path of service file, &quot;ys&quot; means &quot;YARD service&quot;</span>
+<span class="sd">  variables: { }</span>
+<span class="sd">&quot;&quot;&quot;</span><span class="p">]</span>
+
+<span class="c1"># 改造open，替换为模拟的open方法</span>
+<span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s1">&#39;builtins.open&#39;</span><span class="p">,</span> <span class="n">mock_open</span><span class="p">(</span><span class="n">read_data</span><span class="o">=</span><span class="n">config_file_stub</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+    <span class="c1"># ...</span>
+</pre></div>
+</div>
+</section>
+<section id="id18">
+<h3>自动测试脚本<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
+<p>由于使用了python unittest模块来进行测试，它会自动发现前缀为<code class="docutils literal notranslate"><span class="pre">test_</span></code>的单元测试并运行里面定义的测试类。</p>
+<p>所以我们只需要简单一行</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>unittest<span class="w"> </span>discover<span class="w"> </span>./tests
+</pre></div>
+</div>
+<p>即可自动运行所有测试。当然，已经把这个集成到IDE configuration里了。</p>
+</section>
+</section>
+<section id="id19">
+<h2>记法<a class="headerlink" href="#id19" title="Link to this heading"></a></h2>
+<section id="dsl">
+<h3>DSL语法记法<a class="headerlink" href="#dsl" title="Link to this heading"></a></h3>
+<p>见用户文档EBNF语法一节。</p>
+</section>
+<section id="id20">
+<h3>配置文件记法<a class="headerlink" href="#id20" title="Link to this heading"></a></h3>
+<p>见用户文档配置文件一节。</p>
+</section>
+</section>
 </section>
 
 
@@ -101,7 +456,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
         <a href="README.html" class="btn btn-neutral float-left" title="YARD" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
-        <a href="modules.html" class="btn btn-neutral float-right" title="src" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="YARD" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

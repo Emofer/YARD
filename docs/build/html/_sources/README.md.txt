@@ -1,5 +1,10 @@
-# YARD
+# 用户文档
+
+## YARD
+
 YARD 是"Yet another robot DSL for customer service" 的缩写。
+
+北京邮电大学2021级 程序设计实践 大作业
 
 ## 介绍
 
@@ -56,4 +61,56 @@ system      : "system" expression
 
 ### 示例脚本
 
-见service
+见[services](https://github.com/Emofer/YARD/tree/main/services)目录下的.ys文件。`.ys`意思是`yard service`
+
+## 安装
+
+需要python3.8+版本，在项目根目录下运行
+
+```sh
+pip install -r requirements.txt
+```
+
+来安装依赖。
+
+## 使用说明
+
+### 配置文件
+
+程序会读取工作目录下的`config.yaml`，完整的配置文件如下，可以省略部分配置，会采取默认值。默认值位于`src/config/default.yaml`。
+
+```yaml
+# working dir of main interpreter.
+pwd: .
+
+# log config
+log:
+  level: INFO # log level, could be DEBUG, INFO, WARNING, ERROR, CRITICAL
+  path: YARD.log # log path, could be relative or absolute path
+
+# service config
+service:
+  path: ./services/customer.ys # path of service file, "ys" means "YARD service"
+  variables: { } # variables passed to interpreter
+
+```
+
+### 运行
+
+编写好自己的脚本文件`.ys`，在配置文件里设置为该文件路径，然后在根目录执行main.py
+
+```sh
+python main.py
+```
+
+### 文档构建
+
+在`docs/`目录执行
+
+```sh
+make html
+```
+
+将会生成build目录，里面包含构建的文档。
+
+开发文档/报告/模块API 见sphinx生成的网页文档，位于`docs/build/html/index.html`
